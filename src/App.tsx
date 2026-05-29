@@ -15,6 +15,7 @@ import { Footer } from './components/Footer';
 import { categoriesData, initialCommunityTips } from './data';
 import { SkillCategory, CommunityTip } from './types';
 import { Icon } from './components/Icon';
+import { AdSlot } from './components/AdSlot';
 
 export default function App() {
   // Navigation stack
@@ -22,6 +23,35 @@ export default function App() {
   const [previousView, setPreviousView] = useState<string>('home');
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isBottomAdVisible, setIsBottomAdVisible] = useState(true);
+
+  // Dynamic CPM Script Loading & Registration (Lazy loaded to prevent layout shift and lag)
+  useEffect(() => {
+    const loadCPMNetworkScript = () => {
+      // Prevent multiple script insertions
+      if (document.querySelector('script[src*="effectivecpmnetwork.com"]')) {
+        return;
+      }
+      
+      const script = document.createElement('script');
+      script.src = 'https://pl29581083.effectivecpmnetwork.com/59/69/dc/5969dc9baec8e9abf9222518e4a041d8.js';
+      script.async = true;
+      script.setAttribute('data-cfasync', 'false'); // cloudflare bypass hint
+      
+      script.onload = () => {
+        console.log('CPM network script loaded successfully and is ready to trigger.');
+      };
+      script.onerror = (e) => {
+        console.warn('CPM script loaded failed, using theme-matched fallback ad channels.', e);
+      };
+      
+      document.body.appendChild(script);
+    };
+
+    // Lazy load after app is fully mounted and ready
+    const timer = setTimeout(loadCPMNetworkScript, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Search parameters
   const [searchQuery, setSearchQuery] = useState('');
@@ -364,6 +394,9 @@ export default function App() {
 
             </div>
 
+            {/* Home page banner ad */}
+            <AdSlot placement="home-banner" className="pt-2" />
+
             {/* Featured Category Bento Grids */}
             <CategoryList
               categories={categoriesData}
@@ -383,6 +416,18 @@ export default function App() {
           setSelectedCategoryId(null);
         }}
       />
+
+      {/* Sticky Bottom Ad Overlay (Fully closable and optimized for mobile screens) */}
+      {isBottomAdVisible && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pointer-events-none flex justify-center pb-6 md:pb-4">
+          <div className="w-full max-w-6xl pointer-events-auto shadow-lg backdrop-blur-md bg-white/95 rounded-3xl border border-slate-200">
+            <AdSlot 
+              placement="floating-bottom" 
+              onAdClose={() => setIsBottomAdVisible(false)} 
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

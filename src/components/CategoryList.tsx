@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { SkillCategory } from '../types';
 import { Icon } from './Icon';
+import { AdSlot } from './AdSlot';
 
 interface CategoryListProps {
   categories: SkillCategory[];
@@ -136,57 +137,63 @@ export const CategoryList: React.FC<CategoryListProps> = ({
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {filteredCategories.map((cat) => {
+          {filteredCategories.map((cat, index) => {
             const isSaved = bookmarkedIds.includes(cat.id);
             const bstyles = getBentoStyles(cat.id);
+            const showAd = index === 2;
+            
             return (
-              <div
-                key={cat.id}
-                onClick={() => onSelectCategory(cat.id)}
-                className={`group relative rounded-3xl bg-white border border-slate-200/90 ${bstyles.hoverBgBorder} transition-all duration-300 p-6 cursor-pointer flex flex-col justify-between overflow-hidden shadow-xs`}
-              >
-                <div>
-                  {/* Top line: Icon & Bookmark */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold tracking-tight transition-all border ${bstyles.iconBgText}`}>
-                      <Icon name={cat.iconName} size={18} />
+              <React.Fragment key={cat.id}>
+                {showAd && (
+                  <AdSlot key="native-in-content-ad" placement="in-content" />
+                )}
+                <div
+                  onClick={() => onSelectCategory(cat.id)}
+                  className={`group relative rounded-3xl bg-white border border-slate-200/90 ${bstyles.hoverBgBorder} transition-all duration-300 p-6 cursor-pointer flex flex-col justify-between overflow-hidden shadow-xs`}
+                >
+                  <div>
+                    {/* Top line: Icon & Bookmark */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold tracking-tight transition-all border ${bstyles.iconBgText}`}>
+                        <Icon name={cat.iconName} size={18} />
+                      </div>
+
+                      <button
+                        onClick={(e) => toggleBookmark(cat.id, e)}
+                        id={`bookmark-${cat.id}`}
+                        className="p-2 rounded-xl text-slate-400 hover:text-cyan-600 hover:bg-slate-50 transition-all focus:outline-none cursor-pointer"
+                        title={isSaved ? 'Remove from Bookmarks' : 'Save to Bookmarks'}
+                      >
+                        <Icon name={isSaved ? 'BookmarkCheck' : 'Bookmark'} size={16} className={isSaved ? 'text-cyan-600' : ''} />
+                      </button>
                     </div>
 
-                    <button
-                      onClick={(e) => toggleBookmark(cat.id, e)}
-                      id={`bookmark-${cat.id}`}
-                      className="p-2 rounded-xl text-slate-400 hover:text-cyan-600 hover:bg-slate-50 transition-all focus:outline-none cursor-pointer"
-                      title={isSaved ? 'Remove from Bookmarks' : 'Save to Bookmarks'}
-                    >
-                      <Icon name={isSaved ? 'BookmarkCheck' : 'Bookmark'} size={16} className={isSaved ? 'text-cyan-600' : ''} />
-                    </button>
+                    {/* Badges */}
+                    <div className="flex items-center gap-1.5 mb-3">
+                      <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 uppercase font-bold tracking-wide">
+                        {cat.difficulty}
+                      </span>
+                      <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-100 uppercase font-bold tracking-wide">
+                        {bstyles.provider}
+                      </span>
+                    </div>
+
+                    {/* Title & short description */}
+                    <h4 className="font-bold text-base text-slate-800 mb-1 group-hover:text-cyan-600 transition-colors">
+                      {cat.name}
+                    </h4>
+                    <p className="text-xs text-slate-500 leading-relaxed mb-3">
+                      {cat.shortDesc}
+                    </p>
                   </div>
 
-                  {/* Badges */}
-                  <div className="flex items-center gap-1.5 mb-3">
-                    <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 uppercase font-bold tracking-wide">
-                      {cat.difficulty}
-                    </span>
-                    <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-100 uppercase font-bold tracking-wide">
-                      {bstyles.provider}
-                    </span>
+                  {/* Footer action arrow */}
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100 text-xs text-slate-400 group-hover:text-cyan-600 transition-colors">
+                    <span className="text-[10px] bg-slate-50 border border-slate-100 px-2.5 py-0.5 rounded text-slate-600 font-medium">{bstyles.provider}</span>
+                    <Icon name="ChevronRight" size={14} className="transform group-hover:translate-x-1 transition-transform" />
                   </div>
-
-                  {/* Title & short description */}
-                  <h4 className="font-bold text-base text-slate-800 mb-1 group-hover:text-cyan-600 transition-colors">
-                    {cat.name}
-                  </h4>
-                  <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                    {cat.shortDesc}
-                  </p>
                 </div>
-
-                {/* Footer action arrow */}
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100 text-xs text-slate-400 group-hover:text-cyan-600 transition-colors">
-                  <span className="text-[10px] bg-slate-50 border border-slate-100 px-2.5 py-0.5 rounded text-slate-600 font-medium">{bstyles.provider}</span>
-                  <Icon name="ChevronRight" size={14} className="transform group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
+              </React.Fragment>
             );
           })}
         </div>
