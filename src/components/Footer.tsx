@@ -102,8 +102,9 @@ export const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
       </div>
 
       {/* Credit tag line on bottom */}
-      <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-100 text-center text-[11px] font-mono text-slate-450">
+      <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-100 text-center text-[11px] font-mono text-slate-450 space-y-1">
         <p>© 2026 SkillBridge. Fully free resources with creative commons learning path mappings.</p>
+        <p className="text-slate-500 font-medium">Built with <span className="text-rose-500 animate-pulse">♥</span> by Shamia44</p>
       </div>
     </footer>
   );
