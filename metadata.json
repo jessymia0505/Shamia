@@ -1,0 +1,6 @@
+{
+  "name": "SkillBridge",
+  "description": "Discover free digital skills, online opportunities, and interactive learning paths to build your future.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
