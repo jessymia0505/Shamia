@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { CommunityTip } from '../types';
 import { Icon } from './Icon';
+import { AdSlot } from './AdSlot';
 
 interface CommunitySectionProps {
   tips: CommunityTip[];
@@ -209,48 +210,52 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({
             <p className="text-[10px] text-slate-400 mt-1">Be the first player to broadcast a learning tip!</p>
           </div>
         ) : (
-          filteredTips.map((tip) => (
-            <div
-              key={tip.id}
-              className="p-5 md:p-6 rounded-3xl bg-white border border-slate-200/95 hover:border-cyan-300 hover:shadow-[0_8px_30px_rgba(6,182,212,0.06)] transition-all flex flex-col md:flex-row items-start justify-between gap-6 shadow-xs"
-            >
-              {/* Tip Content Column */}
-              <div className="space-y-3 flex-grow">
-                {/* Meta details header line */}
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-sans font-bold text-xs text-slate-800">
-                    {tip.author}
-                  </span>
-                  <span className="text-slate-350 text-xs select-none">•</span>
-                  <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-cyan-50 text-cyan-700 border border-cyan-100 uppercase tracking-widest font-bold">
-                    {tip.category}
-                  </span>
-                  <span className="text-slate-350 text-xs hidden sm:inline select-none">•</span>
-                  <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-                    {tip.timestamp}
-                  </span>
+          filteredTips.map((tip, index) => (
+            <React.Fragment key={tip.id}>
+              {index === 1 && (
+                <AdSlot placement="community-feed" className="my-2" />
+              )}
+              <div
+                className="p-5 md:p-6 rounded-3xl bg-white border border-slate-200/95 hover:border-cyan-300 hover:shadow-[0_8px_30px_rgba(6,182,212,0.06)] transition-all flex flex-col md:flex-row items-start justify-between gap-6 shadow-xs"
+              >
+                {/* Tip Content Column */}
+                <div className="space-y-3 flex-grow">
+                  {/* Meta details header line */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-sans font-bold text-xs text-slate-800">
+                      {tip.author}
+                    </span>
+                    <span className="text-slate-350 text-xs select-none">•</span>
+                    <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-cyan-50 text-cyan-700 border border-cyan-100 uppercase tracking-widest font-bold">
+                      {tip.category}
+                    </span>
+                    <span className="text-slate-350 text-xs hidden sm:inline select-none">•</span>
+                    <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
+                      {tip.timestamp}
+                    </span>
+                  </div>
+
+                  <p className="text-slate-600 text-xs leading-relaxed md:text-sm">
+                    "{tip.content}"
+                  </p>
                 </div>
 
-                <p className="text-slate-600 text-xs leading-relaxed md:text-sm">
-                  "{tip.content}"
-                </p>
+                {/* Upvote score action */}
+                <div className="flex-shrink-0 self-end md:self-start">
+                  <button
+                    onClick={() => onUpvote(tip.id)}
+                    id={`upvote-${tip.id}`}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-cyan-200 text-slate-500 hover:text-cyan-700 transition-all cursor-pointer focus:outline-none"
+                    title="Upvote this collective tip"
+                  >
+                    <Icon name="ThumbsUp" size={13} className="text-cyan-600" />
+                    <span className="font-mono text-xs font-bold text-slate-700">
+                      {tip.upvotes}
+                    </span>
+                  </button>
+                </div>
               </div>
-
-              {/* Upvote score action */}
-              <div className="flex-shrink-0 self-end md:self-start">
-                <button
-                  onClick={() => onUpvote(tip.id)}
-                  id={`upvote-${tip.id}`}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-cyan-200 text-slate-500 hover:text-cyan-700 transition-all cursor-pointer focus:outline-none"
-                  title="Upvote this collective tip"
-                >
-                  <Icon name="ThumbsUp" size={13} className="text-cyan-600" />
-                  <span className="font-mono text-xs font-bold text-slate-700">
-                    {tip.upvotes}
-                  </span>
-                </button>
-              </div>
-            </div>
+            </React.Fragment>
           ))
         )}
       </div>

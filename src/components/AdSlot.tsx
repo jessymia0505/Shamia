@@ -69,11 +69,47 @@ const SPONSORED_CAMPAIGNS: Record<string, AdCampaign> = {
     iconName: 'Layers',
     themeColor: 'text-violet-600 border-violet-200 bg-violet-50/50',
     bgGradient: 'from-violet-50/60 via-white to-pink-50/40 border-violet-150'
+  },
+  'detail-top': {
+    id: 'camp-coursera',
+    title: 'Coursera Plus Unlimited Roadmap Learning Pass',
+    subtitle: 'SPONSORED ROADMAP PARTNER',
+    description: 'Gain official certificates from Google, Meta, and IBM. Deploy professional micro-credentials in Python, AI Prompt engineering, and cloud workflows. 7-day free trial.',
+    ctaText: 'Start Free Trial Path',
+    link: 'https://www.coursera.org/',
+    badge: 'UNIVERSITY CREDENTIALS',
+    iconName: 'Award',
+    themeColor: 'text-cyan-700 border-cyan-200 bg-cyan-50/60',
+    bgGradient: 'from-cyan-50 via-white to-blue-55/35 border-cyan-200'
+  },
+  'dashboard-middle': {
+    id: 'camp-aws',
+    title: 'AWS Official Cloud Certification Fast-Track',
+    subtitle: 'SPONSORED COGNITIVE CLOUD',
+    description: 'Complete hands-on serverless computing micro-tasks and unlock a validated exam voucher. Master EC2, serverless Lambdas, and secure DevOps pipelines.',
+    ctaText: 'Claim Cloud Voucher',
+    link: 'https://aws.amazon.com/free/',
+    badge: 'OFFICIAL CLOUD TRACK',
+    iconName: 'Server',
+    themeColor: 'text-amber-600 border-amber-200 bg-amber-55/40',
+    bgGradient: 'from-amber-50/50 via-white to-slate-50 border-amber-200/60'
+  },
+  'community-feed': {
+    id: 'camp-replit',
+    title: 'Replit Collaborative Multi-player Coding Space',
+    subtitle: 'VERIFIED RESOURCE SPONSOR',
+    description: 'Write, debug, and prototype code instantly with AI agents. Build templates, invite co-creators, and host full-stack apps in seconds. Zero environment setup.',
+    ctaText: 'Launch Code Workspace',
+    link: 'https://replit.com/',
+    badge: 'INTEGRATED IDE WORKSPACE',
+    iconName: 'Monitor',
+    themeColor: 'text-rose-600 border-rose-200 bg-rose-50/50',
+    bgGradient: 'from-rose-50/40 via-white to-indigo-50/40 border-rose-150'
   }
 };
 
 interface AdSlotProps {
-  placement: 'home-banner' | 'sidebar' | 'floating-bottom' | 'in-content';
+  placement: 'home-banner' | 'sidebar' | 'floating-bottom' | 'in-content' | 'detail-top' | 'dashboard-middle' | 'community-feed';
   className?: string;
   onAdClose?: () => void;
 }
@@ -132,7 +168,7 @@ export const AdSlot: React.FC<AdSlotProps> = ({ placement, className = '', onAdC
         {!isLoaded ? (
           <div 
             className={`w-full bg-slate-50 border border-slate-100 rounded-3xl animate-pulse ${
-              placement === 'home-banner' ? 'h-[160px] md:h-[130px]' :
+              (placement === 'home-banner' || placement === 'detail-top' || placement === 'dashboard-middle') ? 'h-[160px] md:h-[130px]' :
               placement === 'sidebar' ? 'h-[148px]' :
               placement === 'floating-bottom' ? 'h-[90px]' :
               'h-[240px]'
@@ -151,7 +187,7 @@ export const AdSlot: React.FC<AdSlotProps> = ({ placement, className = '', onAdC
             <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_top_right,_rgba(6,182,212,0.02)_0%,_transparent_45%)]" />
 
             {/* Banner Ad Layout */}
-            {placement === 'home-banner' && (
+            {(placement === 'home-banner' || placement === 'detail-top' || placement === 'dashboard-middle') && (
               <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
                 <div className="space-y-1.5 flex-grow max-w-3xl">
                   <div className="flex items-center gap-2">
@@ -243,7 +279,7 @@ export const AdSlot: React.FC<AdSlotProps> = ({ placement, className = '', onAdC
             )}
 
             {/* In-content card ad Layout */}
-            {placement === 'in-content' && (
+            {(placement === 'in-content' || placement === 'community-feed') && (
               <div className="p-6 flex flex-col justify-between h-full min-h-[224px] relative z-10">
                 <div className="space-y-4">
                   {/* Header badges */}
