@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { CommunityTip } from '../types';
 import { Icon } from './Icon';
-import { AdSlot } from './AdSlot';
+import { SponsorCard } from './SponsorCard';
 
 interface CommunitySectionProps {
   tips: CommunityTip[];
@@ -213,7 +213,7 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({
           filteredTips.map((tip, index) => (
             <React.Fragment key={tip.id}>
               {index === 1 && (
-                <AdSlot placement="community-feed" className="my-2" />
+                <SponsorCard zone="community-tile" className="my-2" />
               )}
               <div
                 className="p-5 md:p-6 rounded-3xl bg-white border border-slate-200/95 hover:border-cyan-300 hover:shadow-[0_8px_30px_rgba(6,182,212,0.06)] transition-all flex flex-col md:flex-row items-start justify-between gap-6 shadow-xs"

@@ -6,7 +6,7 @@
 import React from 'react';
 import { SkillCategory } from '../types';
 import { Icon } from './Icon';
-import { AdSlot } from './AdSlot';
+import { SponsorCard } from './SponsorCard';
 
 interface BookmarksViewProps {
   categories: SkillCategory[];
@@ -132,7 +132,7 @@ export const BookmarksView: React.FC<BookmarksViewProps> = ({
       </div>
 
       {/* Prominent Dashboard Mid Banner Ad */}
-      <AdSlot placement="dashboard-middle" className="my-4" />
+      <SponsorCard zone="dash-mid" className="my-4" />
 
       {/* 2. Bookmarked resources */}
       <div className="space-y-4">

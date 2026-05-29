@@ -15,7 +15,7 @@ import { Footer } from './components/Footer';
 import { categoriesData, initialCommunityTips } from './data';
 import { SkillCategory, CommunityTip } from './types';
 import { Icon } from './components/Icon';
-import { AdSlot } from './components/AdSlot';
+import { SponsorCard } from './components/SponsorCard';
 
 export default function App() {
   // Navigation stack
@@ -367,7 +367,7 @@ export default function App() {
             </div>
 
             {/* Home page banner ad */}
-            <AdSlot placement="home-banner" className="pt-2" />
+            <SponsorCard zone="banner-main" className="pt-2" />
 
             {/* Featured Category Bento Grids */}
             <CategoryList
@@ -393,9 +393,9 @@ export default function App() {
       {isBottomAdVisible && (
         <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pointer-events-none flex justify-center pb-6 md:pb-4">
           <div className="w-full max-w-6xl pointer-events-auto shadow-lg backdrop-blur-md bg-white/95 rounded-3xl border border-slate-200">
-            <AdSlot 
-              placement="floating-bottom" 
-              onAdClose={() => setIsBottomAdVisible(false)} 
+            <SponsorCard 
+              zone="bottom-drawer" 
+              onDismiss={() => setIsBottomAdVisible(false)} 
             />
           </div>
         </div>

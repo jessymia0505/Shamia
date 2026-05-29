@@ -6,7 +6,7 @@
 import React from 'react';
 import { SkillCategory } from '../types';
 import { Icon } from './Icon';
-import { AdSlot } from './AdSlot';
+import { SponsorCard } from './SponsorCard';
 
 interface CategoryDetailViewProps {
   category: SkillCategory;
@@ -130,7 +130,7 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
           </div>
 
           {/* Prominent Roadmap Banner Ad */}
-          <AdSlot placement="detail-top" className="my-2" />
+          <SponsorCard zone="detail-lead" className="my-2" />
 
           {/* Detailed Roadmap Steps section */}
           <div>
@@ -311,7 +311,7 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
           </div>
 
           {/* Sidebar Promo Ad inside Details Page sidebar column */}
-          <AdSlot placement="sidebar" />
+          <SponsorCard zone="sidebar-box" />
         </div>
       </div>
     </div>

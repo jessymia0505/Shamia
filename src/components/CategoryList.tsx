@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { SkillCategory } from '../types';
 import { Icon } from './Icon';
-import { AdSlot } from './AdSlot';
+import { SponsorCard } from './SponsorCard';
 
 interface CategoryListProps {
   categories: SkillCategory[];
@@ -145,7 +145,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({
             return (
               <React.Fragment key={cat.id}>
                 {showAd && (
-                  <AdSlot key="native-in-content-ad" placement="in-content" />
+                  <SponsorCard key="native-in-content-partner" zone="grid-box" />
                 )}
                 <div
                   onClick={() => onSelectCategory(cat.id)}

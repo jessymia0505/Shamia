@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Icon } from './Icon';
-import { AdSlot } from './AdSlot';
+import { SponsorCard } from './SponsorCard';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -112,7 +112,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Pinned Bottom Footer Area (Sponsor Ad + Micro card) */}
         <div className="p-4 space-y-3 bg-white border-t border-slate-100 shrink-0">
-          <AdSlot placement="sidebar" />
+          <SponsorCard zone="sidebar-box" />
           
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <div className="flex items-center gap-2 text-amber-600 mb-2">
