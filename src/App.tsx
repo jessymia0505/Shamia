@@ -25,34 +25,6 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isBottomAdVisible, setIsBottomAdVisible] = useState(true);
 
-  // Dynamic CPM Script Loading & Registration (Lazy loaded to prevent layout shift and lag)
-  useEffect(() => {
-    const loadCPMNetworkScript = () => {
-      // Prevent multiple script insertions
-      if (document.querySelector('script[src*="effectivecpmnetwork.com"]')) {
-        return;
-      }
-      
-      const script = document.createElement('script');
-      script.src = 'https://pl29581083.effectivecpmnetwork.com/59/69/dc/5969dc9baec8e9abf9222518e4a041d8.js';
-      script.async = true;
-      script.setAttribute('data-cfasync', 'false'); // cloudflare bypass hint
-      
-      script.onload = () => {
-        console.log('CPM network script loaded successfully and is ready to trigger.');
-      };
-      script.onerror = (e) => {
-        console.warn('CPM script loaded failed, using theme-matched fallback ad channels.', e);
-      };
-      
-      document.body.appendChild(script);
-    };
-
-    // Lazy load after app is fully mounted and ready
-    const timer = setTimeout(loadCPMNetworkScript, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   // Search parameters
   const [searchQuery, setSearchQuery] = useState('');
 
